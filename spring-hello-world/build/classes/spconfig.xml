@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:flow="http://www.springframework.org/schema/webflow-config"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+          http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd
+          http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+          http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.3.xsd
+          http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd
+          http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
+">
+
+    <bean id="obj" class="spring.hello.world.WelcomeBean">
+        <property name="id">
+            <value>103</value>
+        </property>
+        <property name="name">
+            <value>Saurabh Kumar</value>
+        </property>
+        <property name="city">
+            <value>Begusarai</value>
+        </property>
+        <property name="message">
+            <value>Hello World!!</value>
+        </property>
+    </bean>
+    
+    <bean id="address" class="SetDependentObject.AddressBean">
+        <property name="address" value="201,GoodWill Ashiyana"/>
+        <property name="landmark" value="Near Balaji Garden"/>
+        <property name="city" value="Navi Mumbai"/>
+        <property name="state" value="Maharashtra"/>
+        <property name="country" value="India"/>
+    </bean>
+    
+    <bean id="studdetail" class="SetDependentObject.StudentBean">
+        <property name="id" value="101"/>
+        <property name="name" value="Sarvesh Parmar"/>
+        <property name="age" value="22"/>
+        <property name="address" ref="address"/>   
+    </bean>
+    
+    <bean id="studsub" class="SetDependentCollection.StudentBean">
+        <property name="id" value="1"/>
+        <property name="name" value="Saurabh Kumar"/>
+        <property name="subject">
+            <list>
+                <value>Basic Chemistry Engineering</value>
+                <value>Basic Physics Engineering</value>
+                <value>Mathematics-I</value>
+                <value>Basic Mechanical Engineering</value>
+                <value>Basic Electrical and Electronics Engineering</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="question" class="SetIndepedentCollection.QuestionClass">
+        <property name="qno" value="1"/>
+        <property name="question" value="What is Java?"/>
+        <property name="answer">
+            <list>
+                <ref bean="answer"/>
+                <ref bean="answer2"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="answer" class="SetIndepedentCollection.AnswerClass">
+        <property name="answer" value="It is a programming lanugage."/>
+        <property name="by" value="Saurabh Kumar"/>
+    </bean>
+    
+    <bean id="answer2" class="SetIndepedentCollection.AnswerClass">
+        <property name="answer" value="It is a programming language.It is very popular language because of it's features." />
+        <property name="by" value="Ramesh Prasad Singh"/>
+    </bean>
+    
+    <!--    Injection through map-->
+          
+    <bean id="q" class="InjectionMap.QuestionBean">
+        <property name="qno" value="1"/>
+        <property name="question" value="What is java?"/>
+        <property name="answer">
+            <map>
+                <entry key="Java is programming language" value="saurabh"/>
+                <entry key="Java is platform independent" value="ramesh"/>
+            </map>
+        </property>
+    </bean>
+
+      <!--Injection through different object in map-->
+
+    <bean id="qq" class="InjectionDiffMap.QuestionBean" >
+        <property name="qno" value="1"/>
+        <property name="question" value="What is Servlet?"/>
+        <property name="answer">
+            <map>
+                <entry key-ref="ans0" value-ref="user1"/>
+                <entry key-ref="ans1" value-ref="user2"/>
+            </map>
+        </property>
+    </bean>    
+    
+    <bean id="ans0" class="InjectionDiffMap.AnswerBean">
+        <constructor-arg value="It is a web technology."></constructor-arg>
+        <constructor-arg value="02/05/2018"></constructor-arg>
+<!--        <property name="answer" value="It is a web technology."/>
+        <property name="DatePosted" value="02/05/2018"/>-->
+    </bean>
+    <bean id="ans1" class="InjectionDiffMap.AnswerBean">
+        <constructor-arg value="Runs under the server"></constructor-arg>
+        <constructor-arg value="01/01/2018"/>
+<!--        <property name="answer" value="Runs under the server"/>
+        <property name="DatePosted" value="01/01/2018"/>-->
+    </bean>
+    
+    <bean id="user1" class="InjectionDiffMap.UserBean">
+        <constructor-arg value="Saurabh Kumar"/>
+        <constructor-arg value="saukumar95@gmail.com"/>
+<!--        <property name="name" value="Saurabh Kumar"/>
+        <property name="email" value="saukumar95@gmail.com"/>-->
+    </bean>
+    <bean id="user2" class="InjectionDiffMap.UserBean">
+        <constructor-arg value="Rajesh Kumar"/>
+        <constructor-arg value="ramk92@gmail.com"/>
+        
+<!--        <property name="name" value="Rajesh Kumar"/>
+        <property name="email" value="ramk92@gmail.com"/>-->
+    </bean>
+    
+</beans>
