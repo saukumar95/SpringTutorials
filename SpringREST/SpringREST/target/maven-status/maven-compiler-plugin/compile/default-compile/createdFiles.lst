@@ -1,0 +1,5 @@
+com/spring/springrest/controller/StudentRestController.class
+com/spring/springrest/config/AppConfig.class
+com/spring/springrest/model/Student.class
+com/spring/springrest/DAO/StudentDAO.class
+com/spring/springrest/config/AppInitializer.class
